@@ -1,1 +1,31 @@
+// voice_app/lib/main.dart import 'package:flutter/material.dart'; import 'pages/home_page.dart';
+
+void main() { runApp(const VoiceApp()); }
+
+class VoiceApp extends StatelessWidget { const VoiceApp({super.key});
+
+@override Widget build(BuildContext context) { return MaterialApp( title: 'Voice Chat App', theme: ThemeData( primarySwatch: Colors.blue, ), home: const HomePage(), ); } }
+
+// voice_app/lib/pages/home_page.dart import 'package:flutter/material.dart'; import '../widgets/user_tile.dart';
+
+class HomePage extends StatefulWidget { const HomePage({super.key});
+
+@override State<HomePage> createState() => _HomePageState(); }
+
+class _HomePageState extends State<HomePage> { bool micOn = true; List<String> users = ['Tú (conectado)', 'Usuario1', 'Usuario2'];
+
+void toggleMic() { setState(() { micOn = !micOn; }); }
+
+@override Widget build(BuildContext context) { return Scaffold( appBar: AppBar( title: const Text('Sala de Voz'), ), body: Column( children: [ const SizedBox(height: 16), const Text('Usuarios conectados:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)), const SizedBox(height: 8), Expanded( child: ListView( children: users.map((user) => UserTile(name: user)).toList(), ), ), const SizedBox(height: 8), IconButton( iconSize: 48, icon: Icon(micOn ? Icons.mic : Icons.mic_off, color: micOn ? Colors.green : Colors.red), onPressed: toggleMic, ), const SizedBox(height: 16), ], ), ); } }
+
+// voice_app/lib/widgets/user_tile.dart import 'package:flutter/material.dart';
+
+class UserTile extends StatelessWidget { final String name; const UserTile({super.key, required this.name});
+
+@override Widget build(BuildContext context) { return ListTile( leading: const Icon(Icons.person), title: Text(name), ); } }
+
+// voice_app/pubspec.yaml name: voice_app version: 1.0.0 environment: sdk: '>=3.1.0 <4.0.0' dependencies: flutter: sdk: flutter cupertino_icons: ^1.0.6
+
+dev_dependencies: flutter_test: sdk: flutter flutter: uses-material-design: true
+
 
